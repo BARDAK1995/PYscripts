@@ -27,7 +27,7 @@ def find_indices_corrected_v2(domain_x_min: float, domain_x_max: float, domain_y
 # Corrected wrapper function to handle an array of points and also plot them
 def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_max: float, domain_y_max: float, num_cells_y: int, points: List[Tuple[float, float]]) -> List[Tuple[int, int]]:
     indices = []
-    for point in points:
+    for i, point in enumerate(points):
         point_x, point_y = point
         index_x, index_y = find_indices_corrected_v2(domain_x_min, domain_x_max, domain_y_max, num_cells_y, point_x, point_y)
         indices.append((index_x, index_y))
@@ -52,12 +52,15 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     plt.scatter(x_coords, y_coords, color='red', zorder=5)
     
     for i, point in enumerate(points):
-        plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
-    
+        # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+
     plt.xlabel('X Coordinate (mm)')
     plt.ylabel('Y Coordinate (mm)')
-    plt.title('Point Locations and Their Indices in the Domain')
+    plt.title('Problem Domain')
     plt.grid(True)
+    plt.gca().set_aspect('equal', adjustable='box')
+
     plt.show()
     
     return indices

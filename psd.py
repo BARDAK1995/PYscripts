@@ -3,52 +3,116 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
-file_path = "6Lightestjet.dat"
+file_path = "10Lightestjet2.dat"
+file_path2 = "10Nojet.dat"
+# file_path = "8Hugejet.dat"
+
 df = pd.read_csv(file_path, delim_whitespace=True, header=None)
+df2 = pd.read_csv(file_path2, delim_whitespace=True, header=None)
 # Extract the first column (time step) and the 10th column (data of interest)
 
-tau = 5.0e-9   
-time_step = np.array(df[0]) * tau
-data_of_interest = np.array(df[11])
-cutoff = len(data_of_interest)//2
-cutoffTime = cutoff * tau
-actual_data = data_of_interest[cutoff:]
-cutoff_timesteps = time_step[cutoff:]
-# Plot the data
-plt.figure(figsize=(12, 6))
-plt.plot(cutoff_timesteps, actual_data, marker='o', linestyle='-')
-plt.xlabel('Time Step')
-plt.ylabel('Data of Interest')
-plt.title('Plot of Data of Interest against Time Step')
-# plt.grid(True)
-plt.show()
+def plotPSD(data):
+    tau = 5.0e-9   
+    time_step = np.array(data[0]) * tau
+    data_of_interest = np.array(data[16])
+    cutoff = len(data_of_interest)//4
+    cutoffTime = cutoff * tau
+    actual_data = data_of_interest[cutoff:]
+    cutoff_timesteps = time_step[cutoff:]
 
 
-# # # Detrend the data to make it stationary
-detrended_data = signal.detrend(actual_data)
-plt.figure(figsize=(12, 6))
-plt.plot(cutoff_timesteps, detrended_data, marker='o', linestyle='-')
-plt.xlabel('Time Step')
-plt.ylabel('Detrended DATA')
-plt.title('Plot of Data of Interest against Time Step')
-# plt.grid(True)
-plt.show()
-detrended_data_array = np.array(detrended_data)
-# Calculate the Power Spectral Density using Fast Fourier Transform
-samplingFreq = 1/tau
-frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=30030)
-# Plotting the Power Spectral Density
-plt.figure(figsize=(12, 6))
-plt.semilogy(frequencies/1000, psd_values)
-plt.title('Power Spectral Density')
-plt.xlabel('Frequency [kHz]')
-plt.ylabel('PSD [V**2/Hz]')
-plt.grid(True)
-plt.show()
-filtered_indices = (frequencies >= 0) & (frequencies <= 900000)
-plt.title('Power Spectral Density')
-plt.xlabel('Frequency [kHz]')
-plt.ylabel('PSD [V**2/Hz]')
-plt.semilogy(frequencies[filtered_indices]/1000, psd_values[filtered_indices])
-plt.show()
+    # # Plot the data
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(cutoff_timesteps, actual_data, marker='o', linestyle='-')
+    # plt.xlabel('Time (s))')
+    # plt.ylabel('Pressure (Pa)')
+    # plt.title('Pressure vs Time')
+    # # plt.grid(True)
+    # plt.show()
 
+    # # # Detrend the data to make it stationary
+    detrended_data = signal.detrend(actual_data)
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(cutoff_timesteps, detrended_data, marker='o', linestyle='-')
+    # plt.xlabel('Time (s))')
+    # plt.ylabel('Pressure Perturbation (Pa)')
+    # plt.title('Unsteady Pressure')
+    # # plt.grid(True)
+    # plt.show()
+    detrended_data_array = np.array(detrended_data)
+    # Calculate the Power Spectral Density using Fast Fourier Transform
+    samplingFreq = 1/tau
+    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=10030)
+    # Plotting the Power Spectral Density
+    plt.figure(figsize=(12, 6))
+    plt.loglog(frequencies/1000, psd_values)
+    plt.title('Power Spectral Density')
+    plt.xlabel('Frequency [kHz]')
+    plt.ylabel('PSD [V**2/Hz]')
+    plt.ylim([10**-12, 2*10**-2]) # setting y-axis range
+
+    plt.grid(True)
+    plt.show()
+
+def plotPSD2(data, data2):
+    tau = 5.0e-9   
+    time_step = np.array(data[0]) * tau
+    time_step2 = np.array(data2[0]) * tau
+
+    data_of_interest = np.array(data[16])
+    data_of_interest2 = np.array(data2[16])
+
+    cutoff = len(data_of_interest)//4
+    cutoff2 = len(data_of_interest2)//4
+
+    cutoffTime = cutoff * tau
+    cutoffTime2 = cutoff2 * tau
+    
+    actual_data = data_of_interest[cutoff:]
+    actual_data2 = data_of_interest2[cutoff2:]
+
+    cutoff_timesteps = time_step[cutoff:]
+    cutoff_timesteps2 = time_step2[cutoff2:]
+
+    # # Plot the data
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(cutoff_timesteps, actual_data, marker='o', linestyle='-')
+    # plt.xlabel('Time (s))')
+    # plt.ylabel('Pressure (Pa)')
+    # plt.title('Pressure vs Time')
+    # # plt.grid(True)
+    # plt.show()
+
+    # # # Detrend the data to make it stationary
+    detrended_data = signal.detrend(actual_data)
+    detrended_data2 = signal.detrend(actual_data2)
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(cutoff_timesteps, detrended_data, marker='o', linestyle='-')
+    # plt.xlabel('Time (s))')
+    # plt.ylabel('Pressure Perturbation (Pa)')
+    # plt.title('Unsteady Pressure')
+    # # plt.grid(True)
+    # plt.show()
+    detrended_data_array = np.array(detrended_data)
+    detrended_data_array2 = np.array(detrended_data2)
+    # Calculate the Power Spectral Density using Fast Fourier Transform
+    samplingFreq = 1/tau
+
+    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=10030)
+    frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=10030)
+
+    # Plotting the Power Spectral Density
+    plt.figure(figsize=(12, 6))
+    plt.loglog(frequencies/1000, psd_values,linewidth=2.5, label='Perturbed Flow wia Pulsed Jet')
+    plt.loglog(frequencies2/1000, psd_values2, label='No Jet(Reference State)')
+    plt.title('Power Spectral Density')
+    plt.xlabel('Frequency [kHz]')
+    plt.ylabel('PSD [P**2/Hz]')
+    plt.ylim([10**-12, 2*10**-2]) # setting y-axis range
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+# plotPSD(df)
+plotPSD2(df,df2)
