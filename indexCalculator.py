@@ -11,15 +11,15 @@ def find_indices_corrected_v2(domain_x_min: float, domain_x_max: float, domain_y
     domain_y = domain_y_max  # y starts from 0
     
     # Calculate the cell size in each dimension
-    cell_size_x = domain_x / num_cells_y  # Assuming square cells, so using num_cells_y for x-axis as well
     cell_size_y = domain_y / num_cells_y
-    
+    cell_size_x = cell_size_y  # Assuming square cells, so using num_cells_y for x-axis as well
+
     # Calculate the minimum coordinate for x and y
     min_x = domain_x_min
     min_y = 0  # y starts from 0
     
     # Calculate the indices
-    index_x = int((point_x - min_x) // cell_size_x) * 2  # Correcting the index by multiplying by 2
+    index_x = int((point_x - min_x) // cell_size_x)  # Correcting the index by multiplying by 2
     index_y = int((point_y - min_y) // cell_size_y)
     
     return index_x, index_y
@@ -52,8 +52,8 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     plt.scatter(x_coords, y_coords, color='red', zorder=5)
     
     for i, point in enumerate(points):
-        # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
-        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        # plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
 
     plt.xlabel('X Coordinate (mm)')
     plt.ylabel('Y Coordinate (mm)')
