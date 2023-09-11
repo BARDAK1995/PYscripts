@@ -108,7 +108,7 @@ def plotPSD2(data, data2):
     plt.title('Power Spectral Density')
     plt.xlabel('Frequency [kHz]')
     plt.ylabel('PSD [P**2/Hz]')
-    plt.ylim([10**-12, 2*10**-2]) # setting y-axis range
+    plt.ylim([10**-10, 2*10**-2]) # setting y-axis range
     plt.legend()
     plt.grid(True)
     plt.show()
