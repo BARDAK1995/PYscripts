@@ -75,7 +75,7 @@ domain_y_max = 5   # mm
 num_cells_y = 50
 
 
-points = [(0, 1), (2, 1), (4, 1), (13, 1), (15, 1), (-1, 0.25), (0, 0.25), (2, 0.25), (4, 0.25), (13, 0.25)]
+points = [(6, 1), (8, 1), (10, 1), (12, 1), (14, 1), (6, 0.25), (8, 0.25), (10, 0.25), (12, 0.25), (14, 0.25)]
 
 # Run the corrected function
 indices_with_plot_corrected_v2 = find_indices_for_points_and_plot_corrected_v2(domain_x_min, domain_x_max, domain_y_max, num_cells_y, points)

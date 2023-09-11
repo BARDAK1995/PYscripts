@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
-file_path = "10Lightestjet2.dat"
-file_path2 = "10Nojet.dat"
+file_path = "./data/7jet_3.dat"
+file_path2 = "./data/7ref.dat"
 # file_path = "8Hugejet.dat"
 
 df = pd.read_csv(file_path, delim_whitespace=True, header=None)
@@ -19,7 +19,6 @@ def plotPSD(data):
     cutoffTime = cutoff * tau
     actual_data = data_of_interest[cutoff:]
     cutoff_timesteps = time_step[cutoff:]
-
 
     # # Plot the data
     # plt.figure(figsize=(12, 6))
@@ -58,7 +57,7 @@ def plotPSD2(data, data2):
     tau = 5.0e-9   
     time_step = np.array(data[0]) * tau
     time_step2 = np.array(data2[0]) * tau
-
+    # 10vx 11vy 13t 14trot 15tvib 16p
     data_of_interest = np.array(data[16])
     data_of_interest2 = np.array(data2[16])
 
@@ -98,8 +97,8 @@ def plotPSD2(data, data2):
     # Calculate the Power Spectral Density using Fast Fourier Transform
     samplingFreq = 1/tau
 
-    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=10030)
-    frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=10030)
+    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=20000)
+    frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=20000)
 
     # Plotting the Power Spectral Density
     plt.figure(figsize=(12, 6))
