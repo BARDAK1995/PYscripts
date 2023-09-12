@@ -52,8 +52,8 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     plt.scatter(x_coords, y_coords, color='red', zorder=5)
     
     for i, point in enumerate(points):
-        plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
-        # plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
 
     plt.xlabel('X Coordinate (mm)')
     plt.ylabel('Y Coordinate (mm)')
