@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
-file_path = "./correctedDATA/Point7_1.dat"
-# file_path2 = "./data/6ref.dat"
-file_path2 = "./correctedDATA/7ref.dat"
+file_path = "./correctedDATA/Point5_2.dat"
+# file_path2 = "./data/9ref.dat"
+file_path2 = "./correctedDATA/Point10_2.dat"
 
 # file_path = "8Hugejet.dat"
 
@@ -99,19 +99,22 @@ def plotPSD2(data, data2):
     # Calculate the Power Spectral Density using Fast Fourier Transform
     samplingFreq = 1/tau
 
-    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=20000)
-    frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=20000)
+    frequencies, psd_values = signal.welch(detrended_data_array, fs=samplingFreq, nperseg=10000)
+    frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=10000)
 
     # Plotting the Power Spectral Density
-    plt.figure(figsize=(12, 6))
-    plt.loglog(frequencies/1000, psd_values,linewidth=2.5, label='Perturbed Flow wia Pulsed Jet')
-    plt.loglog(frequencies2/1000, psd_values2, label='No Jet(Reference State)')
-    plt.title('Power Spectral Density')
-    plt.xlabel('Frequency [kHz]')
-    plt.ylabel('PSD [P**2/Hz]')
-    plt.ylim([10**-10, 2*10**-2]) # setting y-axis range
-    plt.legend()
+    plt.figure(figsize=(10, 6))
+    plt.loglog(frequencies/1000, psd_values,linewidth=3, label='Probe 5') #label='Perturbed Flow via Pulsed Jet'
+    plt.loglog(frequencies2/1000, psd_values2,linewidth=3, label='Probe 10') #label='No Jet(Reference State)'
+    plt.title('PSD of Probe 5 & Probe 10', fontsize=22)
+    plt.xlabel('Frequency [kHz]', fontsize=18)
+    plt.ylabel('PSD [P**2/Hz]', fontsize=18)
+    plt.xlim([3*10**1, 10**4])
+    plt.ylim([0.9*10**-7, 1.1*10**-3]) # setting y-axis range
+    plt.legend(fontsize=20)
     plt.grid(True)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
     plt.show()
 
 def plotPSD22(data, data2):

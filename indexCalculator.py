@@ -53,11 +53,11 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     
     for i, point in enumerate(points):
         # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
-        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center',fontsize=13)
 
     plt.xlabel('X Coordinate (mm)')
     plt.ylabel('Y Coordinate (mm)')
-    plt.title('Problem Domain')
+    plt.title('Probe locations',fontsize=20)
     plt.grid(True)
     plt.gca().set_aspect('equal', adjustable='box')
 
