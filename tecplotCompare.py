@@ -2,7 +2,8 @@ import pandas as pd
 
 file_path_main = './plots/correctedBase_2.tec'
 file_path_ref = './plots/nojet.tec'
-new_file_path = './plots/correctedBase_2_modified.tec'
+new_file_path = './plots/correctedBase_modified_2.tec'
+
 
 with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile, open(new_file_path, 'w') as modified:
     # Writing the first and modified second lines to the new file
@@ -42,7 +43,7 @@ with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile,
             refValues = stripped_lineRef.split()
             ratio_pressure_percent = abs((float(mainValues[press_column_index]) - float(refValues[press_column_index])) / ((float(refValues[press_column_index]) + float(mainValues[press_column_index]) +1/100000000000)/2)*100)
             ratio_Rho_percent = abs((float(mainValues[Rho_column_index]) - float(refValues[Rho_column_index])) / ((float(refValues[Rho_column_index]) + float(mainValues[Rho_column_index]) +1/100000000000)/2)*100)
-            ratio_Ma_percent = abs((float(mainValues[MA_column_index]) - float(refValues[MA_column_index])) / ((float(refValues[MA_column_index]) + float(mainValues[MA_column_index]) +1/100000000000)/2)*100)
+            ratio_Ma_percent = abs((float(mainValues[MA_column_index]) - float(refValues[MA_column_index])))
             ratio_T_percent = abs((float(mainValues[T_column_index]) - float(refValues[T_column_index])) / ((float(refValues[T_column_index]) + float(mainValues[T_column_index]) +1/100000000000)/2)*100)
             #refs
             V_ref = float(refValues[V_column_index])
