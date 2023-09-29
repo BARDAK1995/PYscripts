@@ -103,7 +103,7 @@ def plotPSD2(data, data2):
     frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=10000)
 
     # Plotting the Power Spectral Density
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.loglog(frequencies/1000, psd_values,linewidth=3, label='Probe 5') #label='Perturbed Flow via Pulsed Jet'
     plt.loglog(frequencies2/1000, psd_values2,linewidth=3, label='Probe 10') #label='No Jet(Reference State)'
     plt.title('PSD of Probe 5 & Probe 10', fontsize=22)
