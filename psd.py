@@ -3,14 +3,17 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
-file_path = "./correctedDATA/Point5_2.dat"
+caseName = "Case3"
+point = "1"
+caseName2 = "Case3"
+file_path = f"./Phonic_stage2/{caseName}/Point{point}.dat"
 # file_path2 = "./data/9ref.dat"
-file_path2 = "./correctedDATA/Point10_2.dat"
+file_path2 = f"./Phonic_stage2/{caseName2}/Point{point}.dat"
 
 # file_path = "8Hugejet.dat"
 
 df = pd.read_csv(file_path, delim_whitespace=True, header=None)
-df2 = pd.read_csv(file_path2, delim_whitespace=True, header=None)
+# df2 = pd.read_csv(file_path2, delim_whitespace=True, header=None)
 # Extract the first column (time step) and the 10th column (data of interest)
 
 def plotPSD(data):
@@ -103,7 +106,7 @@ def plotPSD2(data, data2):
     frequencies2, psd_values2 = signal.welch(detrended_data_array2, fs=samplingFreq, nperseg=10000)
 
     # Plotting the Power Spectral Density
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.loglog(frequencies/1000, psd_values,linewidth=3, label='Probe 5') #label='Perturbed Flow via Pulsed Jet'
     plt.loglog(frequencies2/1000, psd_values2,linewidth=3, label='Probe 10') #label='No Jet(Reference State)'
     plt.title('PSD of Probe 5 & Probe 10', fontsize=22)
@@ -175,5 +178,5 @@ def plotPSD22(data, data2):
     plt.legend()
     plt.grid(True)
     plt.show()
-# plotPSD(df)
-plotPSD2(df,df2)
+plotPSD(df)
+# plotPSD2(df,df2)

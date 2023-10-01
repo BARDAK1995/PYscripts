@@ -1,8 +1,9 @@
 import pandas as pd
 
-file_path_main = './plots/correctedBase_2.tec'
-file_path_ref = './plots/nojet.tec'
-new_file_path = './plots/correctedBase_modified_2.tec'
+casename = "case3"
+file_path_main = f'./Phonic_stage2/{casename}.tec'
+file_path_ref = './Phonic_stage2/caseRef.tec'
+new_file_path = f'./Phonic_stage2/{casename}_modified.tec'
 
 
 with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile, open(new_file_path, 'w') as modified:

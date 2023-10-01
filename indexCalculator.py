@@ -53,7 +53,7 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     
     for i, point in enumerate(points):
         # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
-        plt.annotate(f"P_{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center',fontsize=13)
+        plt.annotate(f"{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center',fontsize=13)
 
     plt.xlabel('X Coordinate (mm)')
     plt.ylabel('Y Coordinate (mm)')
@@ -75,7 +75,7 @@ domain_y_max = 5   # mm
 num_cells_y = 50
 
 
-points = [(1, 2.5), (2, 2.5), (3, 2.5), (4, 2.5), (5, 2.5), (6, 2.5), (7, 2.5), (8, 2.5), (9, 2.5),(10, 2.5)]
+points = [(0, 2.5), (1, 2.5), (2, 2.5), (3, 2.5), (4, 2.5), (5, 2.5), (6, 2.5), (7, 2.5), (8, 2.5), (9, 2.5)]
 
 # Run the corrected function
 indices_with_plot_corrected_v2 = find_indices_for_points_and_plot_corrected_v2(domain_x_min, domain_x_max, domain_y_max, num_cells_y, points)
