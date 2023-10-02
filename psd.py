@@ -3,17 +3,18 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
-caseName = "Case3"
-point = "1"
-caseName2 = "Case3"
-file_path = f"./Phonic_stage2/{caseName}/Point{point}.dat"
+caseName = "CASE1_half"
+# caseName = "CASE2"
+point = 1
+caseName2 = "CASE2"
+file_path = f"./Phonic_state_MS2/{caseName}/Point{str(point)}.dat"
 # file_path2 = "./data/9ref.dat"
-file_path2 = f"./Phonic_stage2/{caseName2}/Point{point}.dat"
+file_path2 = f"./Phonic_state_MS2/{caseName}/Point{str(point+9)}.dat"
 
 # file_path = "8Hugejet.dat"
 
 df = pd.read_csv(file_path, delim_whitespace=True, header=None)
-# df2 = pd.read_csv(file_path2, delim_whitespace=True, header=None)
+df2 = pd.read_csv(file_path2, delim_whitespace=True, header=None)
 # Extract the first column (time step) and the 10th column (data of interest)
 
 def plotPSD(data):
@@ -66,8 +67,8 @@ def plotPSD2(data, data2):
     data_of_interest = np.array(data[16])
     data_of_interest2 = np.array(data2[16])
 
-    cutoff = len(data_of_interest)//4
-    cutoff2 = len(data_of_interest2)//4
+    cutoff = len(data_of_interest)//6
+    cutoff2 = len(data_of_interest2)//6
 
     cutoffTime = cutoff * tau
     cutoffTime2 = cutoff2 * tau
@@ -107,13 +108,13 @@ def plotPSD2(data, data2):
 
     # Plotting the Power Spectral Density
     plt.figure(figsize=(12, 6))
-    plt.loglog(frequencies/1000, psd_values,linewidth=3, label='Probe 5') #label='Perturbed Flow via Pulsed Jet'
-    plt.loglog(frequencies2/1000, psd_values2,linewidth=3, label='Probe 10') #label='No Jet(Reference State)'
-    plt.title('PSD of Probe 5 & Probe 10', fontsize=22)
+    plt.loglog(frequencies/1000, psd_values,linewidth=3, label='probe 1') #label='Perturbed Flow via Pulsed Jet'
+    plt.loglog(frequencies2/1000, psd_values2,linewidth=3, label='probe 10') #label='No Jet(Reference State)'
+    plt.title('PSD', fontsize=22)
     plt.xlabel('Frequency [kHz]', fontsize=18)
     plt.ylabel('PSD [P**2/Hz]', fontsize=18)
     plt.xlim([3*10**1, 10**4])
-    plt.ylim([0.9*10**-7, 1.1*10**-3]) # setting y-axis range
+    plt.ylim([0.9*10**-9, 1.1*10**-2]) # setting y-axis range
     plt.legend(fontsize=20)
     plt.grid(True)
     plt.xticks(fontsize=15)
@@ -178,5 +179,5 @@ def plotPSD22(data, data2):
     plt.legend()
     plt.grid(True)
     plt.show()
-plotPSD(df)
-# plotPSD2(df,df2)
+# plotPSD(df)
+plotPSD2(df,df2)

@@ -1,10 +1,16 @@
 import pandas as pd
+import numpy as np
+casename = "CASE1_half"
+casename = "CASE1"
 
-casename = "case3"
-file_path_main = f'./Phonic_stage2/{casename}.tec'
-file_path_ref = './Phonic_stage2/caseRef.tec'
-new_file_path = f'./Phonic_stage2/{casename}_modified.tec'
+file_path_main = f'./Phonic_state_MS2/{casename}.tec'
+# file_path_main31 = f'./Phonic_state_MS2/{casename}_half_modified.tec'
+# file_path_main32 = f'./Phonic_state_MS2/{casename}_modified.tec'
+file_path_ref = './Phonic_state_MS2/CaseRef.tec'
+new_file_path = f'./Phonic_state_MS2/{casename}_modified.tec'
 
+file_path_ref = f'./Phonic_state_MS2/{casename}_half.tec'
+new_file_path = f'./Phonic_state_MS2/{casename}_modified_UNSTEADY.tec'
 
 with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile, open(new_file_path, 'w') as modified:
     # Writing the first and modified second lines to the new file
@@ -24,9 +30,12 @@ with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile,
     T_column_index = variables.index("Ttrn ")
     V_column_index = variables.index("Vx   ") 
 
-    # Step 3: Preparing the modified second line to include "NEWVAR"
-    modified_second_line = variables_line.strip() + ',      "rho_dif",      "Ma_dif,      "Pa_dif",      "T_dif",      "V_ref", ,      "Rho_ref",      "P_ref"'
+    # rhodif_index = variables.index("rho_dif") 
+    # padif_index = variables.index("Pa_dif") 
 
+    # Step 3: Preparing the modified second line to include "NEWVAR"
+    modified_second_line = variables_line.strip() + ',      "rho_dif",      "Ma_dif,      "Pa_dif",      "T_dif",      "V_ref", ,      "Rho_ref",      "P_ref",      "waveSpeed"'
+    # modified_second_line = variables_line.strip() + ',      "rho_dif",      "Ma_dif,      "Pa_dif",      "T_dif",      "V_ref", ,      "Rho_ref",      "P_ref",      "waveSpeed",      "rhoUNSTEADY",      "paUNSTEADY"'
     modified.write(first_line + '\n')
     modified.write(modified_second_line + '\n')
     modified.write(third_line + '\n')
@@ -42,19 +51,26 @@ with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile,
             # Split the line into individual values
             mainValues = stripped_lineMain.split()
             refValues = stripped_lineRef.split()
-            ratio_pressure_percent = abs((float(mainValues[press_column_index]) - float(refValues[press_column_index])) / ((float(refValues[press_column_index]) + float(mainValues[press_column_index]) +1/100000000000)/2)*100)
-            ratio_Rho_percent = abs((float(mainValues[Rho_column_index]) - float(refValues[Rho_column_index])) / ((float(refValues[Rho_column_index]) + float(mainValues[Rho_column_index]) +1/100000000000)/2)*100)
+            # ratio_pressure_percent = abs((float(mainValues[press_column_index]) - float(refValues[press_column_index])) / ((float(refValues[press_column_index]) + float(mainValues[press_column_index]) +1/100000000000)/2)*100)
+            ratio_pressure_percent = (float(mainValues[press_column_index]) - float(refValues[press_column_index]))
+            ratio_Rho_percent = ((float(mainValues[Rho_column_index]) - float(refValues[Rho_column_index])) / ((float(refValues[Rho_column_index]) + float(mainValues[Rho_column_index]) +1/100000000000)/2)*100)
             ratio_Ma_percent = abs((float(mainValues[MA_column_index]) - float(refValues[MA_column_index])))
             ratio_T_percent = abs((float(mainValues[T_column_index]) - float(refValues[T_column_index])) / ((float(refValues[T_column_index]) + float(mainValues[T_column_index]) +1/100000000000)/2)*100)
+            
             #refs
             V_ref = float(refValues[V_column_index])
             rho_ref = float(refValues[Rho_column_index])
             P_ref = float(refValues[press_column_index])
-            
+            T_ref = float(refValues[T_column_index])
+            a = np.sqrt(298.8 * T_ref)
+            wavespeed = a + V_ref
             # Add the value for "NEWVAR" column and join them back
+            # pa_unst = float(refValues[padif_index]) - float(refValues[padif_index])
+            # rho_unst = float(refValues[rhodif_index]) - float(refValues[padif_index])
+
             rho_dif = 1
             ma_dif = 2
-            modified_line = '\t'.join(mainValues + ["{:.6E}".format(ratio_Rho_percent)] + ["{:.6E}".format(ratio_Ma_percent)] + ["{:.6E}".format(ratio_pressure_percent)] + ["{:.6E}".format(ratio_T_percent)] + ["{:.6E}".format(V_ref)] + ["{:.6E}".format(rho_ref)]+ ["{:.6E}".format(P_ref)]) + '\n'
+            modified_line = '\t'.join(mainValues + ["{:.6E}".format(ratio_Rho_percent)] + ["{:.6E}".format(ratio_Ma_percent)] + ["{:.6E}".format(ratio_pressure_percent)] + ["{:.6E}".format(ratio_T_percent)] + ["{:.6E}".format(V_ref)] + ["{:.6E}".format(rho_ref)] + ["{:.6E}".format(P_ref)] + ["{:.6E}".format(wavespeed)]) + '\n'
             modified.write(modified_line)
 
 new_file_path
