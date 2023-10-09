@@ -1,16 +1,20 @@
 import pandas as pd
 import numpy as np
-casename = "CASE1_half"
-casename = "CASE1"
+casename = "case3_half"
+# casename = "case3_otherhalf"
+casename = "case3"
 
-file_path_main = f'./Phonic_state_MS2/{casename}.tec'
+file_path_main = f'./Phonic_state_MS3/{casename}.tec'
 # file_path_main31 = f'./Phonic_state_MS2/{casename}_half_modified.tec'
 # file_path_main32 = f'./Phonic_state_MS2/{casename}_modified.tec'
-file_path_ref = './Phonic_state_MS2/CaseRef.tec'
-new_file_path = f'./Phonic_state_MS2/{casename}_modified.tec'
+file_path_ref = './Phonic_state_MS3/ref.tec'
+new_file_path = f'./Phonic_state_MS3/{casename}_modified.tec'
 
-file_path_ref = f'./Phonic_state_MS2/{casename}_half.tec'
-new_file_path = f'./Phonic_state_MS2/{casename}_modified_UNSTEADY.tec'
+file_path_ref = f'./Phonic_state_MS3/{casename}_half.tec'
+new_file_path = f'./Phonic_state_MS3/{casename}_modified_UNSTEADY.tec'
+
+file_path_ref = f'./Phonic_state_MS3/{casename}_otherhalf.tec'
+new_file_path = f'./Phonic_state_MS3/{casename}_modified_UNSTEADY2.tec'
 
 with open(file_path_main, 'r') as mainFile, open(file_path_ref, 'r') as refFile, open(new_file_path, 'w') as modified:
     # Writing the first and modified second lines to the new file

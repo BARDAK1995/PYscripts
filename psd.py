@@ -5,11 +5,12 @@ import numpy as np
 # Read the file into a DataFrame, assuming space-separated values and no header
 caseName = "CASE1_half"
 # caseName = "CASE2"
-point = 1
-caseName2 = "CASE2"
-file_path = f"./Phonic_state_MS2/{caseName}/Point{str(point)}.dat"
+point = 4
+caseName = "CASE3"
+file_path = f"./Phonic_state_MS3/{caseName}/Point{str(point)}.dat"
 # file_path2 = "./data/9ref.dat"
-file_path2 = f"./Phonic_state_MS2/{caseName}/Point{str(point+9)}.dat"
+file_path2 = f"./Phonic_state_MS3/{caseName}/Point{str(point+5)}.dat"
+# file_path2 = f"./Phonic_state_MS3/{caseName}/Point{str(point)}.dat"
 
 # file_path = "8Hugejet.dat"
 
