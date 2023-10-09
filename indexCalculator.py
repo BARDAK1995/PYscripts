@@ -52,7 +52,7 @@ def find_indices_for_points_and_plot_corrected_v2(domain_x_min: float, domain_x_
     plt.scatter(x_coords, y_coords, color='red', zorder=5)
     
     for i, point in enumerate(points):
-        # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center')
+        # plt.annotate(f"{indices[i]}", (point[0], point[1]), textcoords="offset points", xytext=(0, -10), ha='center')
         plt.annotate(f"{i+1}", (point[0], point[1]), textcoords="offset points", xytext=(0, 10), ha='center',fontsize=13)
 
     plt.xlabel('X Coordinate (mm)')
@@ -72,10 +72,15 @@ domain_x_min = -4  # mm
 domain_x_max = 16   # mm
 
 domain_y_max = 5   # mm
-num_cells_y = 50
+num_cells_y = 150
 
+# setup1
+points = [(-3, 2.5), (-1, 2.5), (1, 2.5), (3, 2.5), (5, 2.5), (7, 2.5), (9, 2.5), (11, 2.5), (13, 2.5), (15, 2.5)]
+# setup2
+points = [(5, 0.07), (5.5, 0.07), (6, 0.07), (6.5, 0.07), (7, 0.07), (7.5, 0.07), (8, 0.07), (8.5, 0.07), (9, 0.07), (9.5, 0.07)]
+# setup3
+points = [(5, 0.57), (5.5, 0.57), (6, 0.57), (6.5, 0.57), (7, 0.57), (7.5, 0.57), (8, 0.57), (8.5, 0.57), (9, 0.57), (9.5, 0.57)]
 
-points = [(0, 2.5), (1, 2.5), (2, 2.5), (3, 2.5), (4, 2.5), (5, 2.5), (6, 2.5), (7, 2.5), (8, 2.5), (9, 2.5)]
 
 # Run the corrected function
 indices_with_plot_corrected_v2 = find_indices_for_points_and_plot_corrected_v2(domain_x_min, domain_x_max, domain_y_max, num_cells_y, points)
